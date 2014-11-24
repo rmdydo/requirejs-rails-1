@@ -95,11 +95,11 @@ OS X Homebrew users can use 'brew install node'.
 
       # Save the original JS compressor and cache, which will be restored later.
 
-      original_js_compressor = requirejs.env.js_compressor
-      requirejs.env.js_compressor = false
+      # original_js_compressor = requirejs.env.js_compressor
+      # requirejs.env.js_compressor = false
 
-      original_cache = requirejs.env.cache
-      requirejs.env.cache = nil
+      # original_cache = requirejs.env.cache
+      # requirejs.env.cache = nil
 
       requirejs.env.each_logical_path do |logical_path|
         m = bower_json_pattern.match(logical_path)
@@ -119,8 +119,8 @@ OS X Homebrew users can use 'brew install node'.
       end
 
       # Restore the original JS compressor and cache.
-      requirejs.env.js_compressor = original_js_compressor
-      requirejs.env.cache = original_cache
+      # requirejs.env.js_compressor = original_js_compressor
+      # requirejs.env.cache = original_cache
     end
 
     task generate_rjs_driver: ["requirejs:setup"] do
