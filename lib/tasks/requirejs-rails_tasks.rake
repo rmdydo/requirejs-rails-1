@@ -102,9 +102,17 @@ OS X Homebrew users can use 'brew install node'.
       requirejs.env.cache = nil
 
       requirejs.env.each_logical_path do |logical_path|
-		next unless requirejs.config.asset_allowed?(logical_path)
-		if asset = requirejs.env.find_asset(logical_path)
-		  filename = requirejs.config.source_dir + asset.logical_path
+        m = bower_json_pattern.match(logical_path)
+        bower_logical_path = m && "#{m[1]}#{js_ext}"
+
+        next \
+          if !(requirejs.config.asset_allowed?(logical_path) || bower_logical_path)
+
+        asset = requirejs.env.find_asset(logical_path)
+
+        if asset
+          # If a `bower.json` was found, then substitute the logical path with the parsed module name.
+          filename = requirejs.config.source_dir.join(bower_logical_path || asset.logical_path)
           filename.dirname.mkpath
           asset.write_to(filename)
         end
