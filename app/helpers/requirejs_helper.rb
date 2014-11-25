@@ -65,12 +65,23 @@ module RequirejsHelper
 
           # Pass an array to `require`, since it's a top-level module about to be loaded asynchronously (see
           # `http://requirejs.org/docs/errors.html#notloaded`).
-          script.concat(" require([#{name.dump}]);") \
-            if name
+          script.concat(" require([#{name.dump}]);") if name
 
           script.html_safe
         end)
       end
+
+	    html.concat("<script>try{
+	              requirejs.createNode = function (config, moduleName, url) {
+	              var node = config.xhtml ?
+	              document.createElementNS('http://www.w3.org/1999/xhtml', 'html:script') :
+	              document.createElement('script');
+	              node.type = config.scriptType || 'text/javascript';
+	              node.crossOrigin = 'anonymous';
+	              node.async = true;
+	              return node;
+	              };
+	            } catch(e) { }</script>")
 
       html.html_safe
     end
