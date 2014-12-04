@@ -49,6 +49,7 @@ module Requirejs
         urlArgs
         waitSeconds
         xhtml
+        cdn
       }
 
         self.build_config_whitelist = %w{

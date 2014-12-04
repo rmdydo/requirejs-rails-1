@@ -71,7 +71,11 @@ module RequirejsHelper
         end)
 
         html.concat(content_tag(:script) do
-        	script = "try{requirejs.createNode = function (config, moduleName, url) {var node = config.xhtml ? document.createElementNS('http://www.w3.org/1999/xhtml', 'html:script') : document.createElement('script');node.type = config.scriptType || 'text/javascript';node.crossOrigin = 'anonymous';node.async = true;return node;};}catch(e){}"
+        	script = "try{requirejs.createNode = function (config, moduleName, url) {
+                    var node = config.xhtml ? document.createElementNS('http://www.w3.org/1999/xhtml', 'html:script') :
+                    document.createElement('script');node.type = config.scriptType || 'text/javascript';
+                    if(config.cdn.indexOf(moduleName) == -1){node.crossOrigin = 'anonymous';}
+                    node.async = true;return node;};}catch(e){}"
         	script.html_safe
         end)
       end
